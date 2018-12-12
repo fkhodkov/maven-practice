@@ -52,7 +52,6 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
           <configuration>
-            <release>${jdk.version}</release>
             <source>${jdk.version}</source>
             <target>${jdk.version}</target>
           </configuration>
@@ -80,4 +79,12 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <repositories>
+    <repository>
+      <id>spring-repo</id>
+      <name>Spring Repository</name>
+      <url>https://repo.spring.io/release</url>
+    </repository>
+  </repositories>
 </project>
