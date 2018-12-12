@@ -52,7 +52,6 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
           <configuration>
-            <release>${jdk.version}</release>
             <source>${jdk.version}</source>
             <target>${jdk.version}</target>
           </configuration>
@@ -77,7 +76,33 @@
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
         </plugin>
+        <plugin>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>1.4.1</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <phase>install</phase>
+            </execution>
+          </executions>
+          <configuration>
+            <rules>
+              <requireOS>
+                <family>windows</family>
+                <!--<family>linux</family>-->
+              </requireOS>
+            </rules>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
+
+    <plugins>
+      <!--<plugin>-->
+        <!--<artifactId>maven-enforcer-plugin</artifactId>-->
+      <!--</plugin>-->
+    </plugins>
   </build>
 </project>
