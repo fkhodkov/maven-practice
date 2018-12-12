@@ -16,6 +16,10 @@
 
   <name>maven.practice</name>
   <url>https://school.hh.ru/</url>
+  <scm>
+    <connection>scm:git:git@github.com:alinkov/maven-practice.git</connection>
+    <developerConnection>scm:git:git@github.com:alinkov/maven-practice.git</developerConnection>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,7 +56,6 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
           <configuration>
-            <release>${jdk.version}</release>
             <source>${jdk.version}</source>
             <target>${jdk.version}</target>
           </configuration>
@@ -76,6 +79,16 @@
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.5.3</version>
+          <configuration>
+            <preparationGoals>clean install</preparationGoals>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            <useReleaseProfile>false</useReleaseProfile>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
