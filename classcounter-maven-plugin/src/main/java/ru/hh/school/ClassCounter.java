@@ -2,7 +2,6 @@ package ru.hh.school;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,18 +25,13 @@ public final class ClassCounter extends AbstractMojo {
   /**
    * Location of the file.
    */
-  @Parameter(defaultValue = "${project}", property = "targetProject", required = true)
+  @Parameter(defaultValue = "${project}", readonly = true)
   private MavenProject project;
-
-  private Path projectDirectory;
-
-  protected void setDir(final FileSystem fs) {
-    projectDirectory = fs.getPath(project.getBuild().getOutputDirectory());
-  }
 
   @Parameter(defaultValue = "10", property = "minClassNumber", required = true)
   private int minClassNumber;
 
+  // Declare setters as protected as they're only supposed to be called by ClassCounterTest class.
   protected void setMinClassNumber(final int newMinClassNumber) {
     minClassNumber = newMinClassNumber;
   }
@@ -45,6 +39,7 @@ public final class ClassCounter extends AbstractMojo {
   @Parameter(defaultValue = "false", property = "throwIfFailed", required = true)
   private boolean throwIfFailed;
 
+  // Declare setters as protected as they're only supposed to be called by ClassCounterTest class.
   protected void setThrowIfFailed(final boolean newThrowIfFailed) {
     throwIfFailed = newThrowIfFailed;
   }
@@ -65,11 +60,9 @@ public final class ClassCounter extends AbstractMojo {
    *                                true.
    */
   public void execute() throws MojoExecutionException {
-    if (projectDirectory == null) {
-      setDir(FileSystems.getDefault());
-    }
+    Path dir = FileSystems.getDefault().getPath(project.getBuild().getOutputDirectory());
     try {
-      countClasses(projectDirectory);
+      countClasses(dir);
       reportClassInfo();
       if (outerClasses < minClassNumber) {
         reportNotEnoughClasses();
